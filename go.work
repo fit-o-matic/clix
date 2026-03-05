@@ -1,0 +1,7 @@
+go 1.26
+
+use (
+	./libs/clix
+	./libs/clix-plugin
+	./plugins/secret
+)
