@@ -9,7 +9,7 @@ clix is a Go framework for building extensible CLI applications. Add functionali
 ```
 libs/
   clix/            # Core library
-  clix-plugin/     # Plugin lifecycle library (help, version, cobra integration)
+  clix-kit/        # CLI toolkit (help, version, cobra integration)
 plugins/
   secret/          # Example plugin: secret management
 ```
@@ -18,18 +18,18 @@ This is a Go workspace monorepo. Each module has its own `go.mod` and can be bui
 
 ## Writing a Plugin
 
-A plugin is a Go executable that uses the `clix-plugin` library. Define your cobra commands and wire them into a `Plugin` struct:
+A plugin is a Go executable that uses the `clix-kit` library. Define your cobra commands and wire them into a `Plugin` struct:
 
 ```go
 package main
 
 import (
-    plugin "github.com/finkt/clix-plugin"
+    kit "github.com/finkt/clix-kit"
     "github.com/spf13/cobra"
 )
 
 func main() {
-    p := &plugin.Plugin{
+    p := &kit.Plugin{
         Name:        "myplugin",
         Description: "does something useful",
         Version:     "0.1.0",
@@ -50,7 +50,7 @@ The `Plugin` struct provides:
 
 ```sh
 go build ./libs/clix/...
-go build ./libs/clix-plugin/...
+go build ./libs/clix-kit/...
 go build ./plugins/secret/...
 ```
 

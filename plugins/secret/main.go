@@ -2,7 +2,7 @@
 package main
 
 import (
-	plugin "github.com/finkt/clix-plugin"
+	kit "github.com/finkt/clix-kit"
 	"github.com/spf13/cobra"
 )
 
@@ -12,15 +12,16 @@ func newRootCmd() *cobra.Command {
 		Short: "manages secrets for clix",
 	}
 	cmd.AddCommand(
-		newGetCmd(),
 		newSetCmd(),
 		newListCmd(),
+		newDeleteCmd(),
+		newSetEnvCmd(),
 	)
 	return cmd
 }
 
 func main() {
-	p := &plugin.Plugin{
+	p := &kit.Plugin{
 		Name:        "secret",
 		Description: "manages secrets for clix",
 		Version:     "0.1.0",

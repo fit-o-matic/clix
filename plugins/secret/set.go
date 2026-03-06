@@ -12,7 +12,14 @@ func newSetCmd() *cobra.Command {
 		Short: "Set a secret",
 		Args:  cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			fmt.Fprintf(cmd.OutOrStdout(), "setting secret: %s\n", args[0])
+			store, err := NewStore()
+			if err != nil {
+				return fmt.Errorf("initializing store: %w", err)
+			}
+			if err := store.Set(args[0], args[1]); err != nil {
+				return fmt.Errorf("setting secret %q: %w", args[0], err)
+			}
+			fmt.Fprintf(cmd.OutOrStdout(), "secret %q saved\n", args[0])
 			return nil
 		},
 	}

@@ -9,10 +9,20 @@ import (
 func newListCmd() *cobra.Command {
 	return &cobra.Command{
 		Use:   "list",
-		Short: "List all secrets",
+		Short: "List all secret keys",
 		Args:  cobra.NoArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
-			fmt.Fprintln(cmd.OutOrStdout(), "listing secrets")
+			store, err := NewStore()
+			if err != nil {
+				return fmt.Errorf("initializing store: %w", err)
+			}
+			keys, err := store.List()
+			if err != nil {
+				return fmt.Errorf("listing secrets: %w", err)
+			}
+			for _, key := range keys {
+				fmt.Fprintln(cmd.OutOrStdout(), key)
+			}
 			return nil
 		},
 	}

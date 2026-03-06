@@ -1,0 +1,25 @@
+package main
+
+import (
+	"fmt"
+
+	"github.com/spf13/cobra"
+)
+
+func newDeleteCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "delete",
+		Short: "Delete a secret key",
+		Args:  cobra.ExactArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			store, err := NewStore()
+			if err != nil {
+				return fmt.Errorf("initializing store: %w", err)
+			}
+			if err := store.Delete(args[0]); err != nil {
+				return fmt.Errorf("deleting secret: %w", err)
+			}
+			return nil
+		},
+	}
+}
